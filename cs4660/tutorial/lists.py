@@ -1,26 +1,21 @@
-"""dsdsaLists defines simple list related operations"""
-
-from __future__ import division
+"""Lists defines simple list related operations"""
 
 def get_first_item(li):
-    
-    return li[0]
+    """Return the first item from the list"""
+    pass
 
 def get_last_item(li):
     """Return the last item from the list"""
-
-    return li[-1];
-
+    pass
 
 def get_second_and_third_items(li):
-    """Returzn second and third item from the list"""
-    return li[1:3]
+    """Return second and third item from the list"""
+    pass
 
 def get_sum(li):
     """Return the sum of the list items"""
-    return sum(li)
+    pass
 
 def get_avg(li):
-    avg = float(sum(li)/len(li))
-    return avg
     """Returns the average of the list items"""
+    pass
