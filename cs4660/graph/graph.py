@@ -288,7 +288,7 @@ class AdjacencyMatrix(object):
         for  i in range(x) :
         	if(self.adjacency_matrix[isource][i])!=0:
         		list.append(self.nodes[i])
-        print(list)
+     #   print(list)
 
 
         return list
@@ -373,7 +373,7 @@ class ObjectOriented(object):
         for i in range (len (self.edges)):
         	if (self.edges[i].source == node):
         		list.append(self.edges[i].destination);
-        print (list)
+   #     print (list)
         return list
 
 
