@@ -8,7 +8,6 @@ def get_first_item(li):
 
 def get_last_item(li):
     """Return the last item from the list"""
-
     return li[-1];
 
 
