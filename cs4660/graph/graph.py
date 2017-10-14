@@ -41,9 +41,13 @@ def construct_graph_from_file(graph, file_path):
     2. for each following line (from second line to last line), add them as edge to graph
     3. return the graph
     """
+<<<<<<< HEAD
     print(222)
     print(file_path)
     f = open("http://192.241.218.106:9000/secret", encoding='utf-8')
+=======
+    f = open(file_path, encoding='utf-8')
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     line = f.readline()
     for i in range(int(line)):
         graph.add_node(Node(i))
@@ -79,7 +83,11 @@ class Node(object):
         return hash(self.data)
 
 class Edge(object):
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     def __init__(self, source, destination, weight):
         self.source = source
         self.destination = destination
@@ -107,11 +115,16 @@ class AdjacencyList(object):
     def __init__(self):
         # adjacencyList should be a dictonary of node to edges
         self.adjacency_list = {}
+<<<<<<< HEAD
+=======
+        a = len(self.adjacency_list)
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
      
 
 
     def adjacent(self, node_1, node_2):
     	if node_2 not in self.adjacency_list[node_1] :
+<<<<<<< HEAD
             return False
     		#if node_1 not in self.adjacency_list[node_2]:
     		#		return False
@@ -119,26 +132,49 @@ class AdjacencyList(object):
     	else:
             return True
     			
+=======
+    		if node_1 not in self.adjacency_list[node_2]:
+    			return False
+    		
+    	elif node_2  in self.adjacency_list[node_1] :
+    			return True
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     	
     	
 
 
 
     def neighbors(self, node):
+<<<<<<< HEAD
         return list(self.adjacency_list[node])
 #           return list(self.adjacency_list[node]);
+=======
+    	list1 =[]
+    	if(len(self.adjacency_list[node])==0):
+    		return list1
+    	elif(len(self.adjacency_list[node])!=0):
+    		return list(self.adjacency_list[node]);
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
 
 
 
     def add_node(self, node):
+<<<<<<< HEAD
     	if node not in self.adjacency_list:
     		self.adjacency_list[node] ={}
     		return True
     	else:
+=======
+    	if(node not in self.adjacency_list):
+    		self.adjacency_list[node] ={}
+    		return True
+    	elif(node in self.adjacency_list):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     		return False
 
 
     def remove_node(self, node):	
+<<<<<<< HEAD
         if node not in self.adjacency_list:
         	return False
         else:
@@ -147,13 +183,26 @@ class AdjacencyList(object):
                 if node in self.adjacency_list[i]:
                     self.adjacency_list[i].pop(node)
         return True
+=======
+        if(node not in self.adjacency_list):
+        	return False
+        elif(node in self.adjacency_list):
+        	for i in self.adjacency_list:
+        		self.adjacency_list[i] ={}
+        	return True;
+
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
 
     def add_edge(self, edge):
     	source = edge.source;
     	destination= edge.destination;
     	if(destination in self.adjacency_list[source]):
     		return False;
+<<<<<<< HEAD
     	else:
+=======
+    	elif(destination not in self.adjacency_list[source]):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     		self.adjacency_list[source][destination] = edge.weight;
     		return True;
 
@@ -168,6 +217,7 @@ class AdjacencyList(object):
     	
     	if(destination not in self.adjacency_list[source]):
     		return False
+<<<<<<< HEAD
     	else:
             self.adjacency_list[source] = {}
             return True 
@@ -183,6 +233,15 @@ class AdjacencyList(object):
 
     def get_graph(self):
         return None
+=======
+    	elif(destination in self.adjacency_list[source]):
+    		self.adjacency_list[source] = {} 
+    		self.adjacency_list[destination] ={}
+    		return True
+
+
+
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
 
 
 
@@ -215,7 +274,11 @@ class AdjacencyMatrix(object):
     		return True
 
 
+<<<<<<< HEAD
     	else:
+=======
+    	elif(node in self.nodes):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     		return False
        	
 
@@ -232,7 +295,11 @@ class AdjacencyMatrix(object):
         	return False;
                       
 
+<<<<<<< HEAD
         else:
+=======
+        elif (self.adjacency_matrix[isource][idestination] != edge.weight):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
 
         	self.adjacency_matrix[isource][idestination] = edge.weight
         	return True
@@ -244,12 +311,20 @@ class AdjacencyMatrix(object):
     	if node not in self.nodes:
     		return False
 
+<<<<<<< HEAD
     	else:
+=======
+    	elif node in self.nodes:
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
         	isource = self.__get_node_index(node);
         	(self.nodes).remove(node);
         	self.adjacency_matrix.pop(isource);
         	for i in range(len(self.adjacency_matrix)):
+<<<<<<< HEAD
         		self.adjacency_matrix[i].pop(isource)#={}
+=======
+        		self.adjacency_matrix[i].pop(isource)
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
         	
         	return True
 
@@ -267,12 +342,21 @@ class AdjacencyMatrix(object):
 
     	if (self.adjacency_matrix[isource][idestination] != 0):
     		self.adjacency_matrix[isource][idestination] = 0
+<<<<<<< HEAD
     		self.adjacency_matrix[idestination][isource] =0 
     		return True
 
     		
     	else:
             return False
+=======
+    		 
+    		return True
+
+    		
+    	elif (self.adjacency_matrix[isource][idestination] == 0):
+    			return False
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
 
     
 
@@ -285,7 +369,11 @@ class AdjacencyMatrix(object):
 
     	if(self.adjacency_matrix[isource][idestination]==0):
     		return False;
+<<<<<<< HEAD
     	else:
+=======
+    	elif(self.adjacency_matrix[isource][idestination]!=0):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
     		return True;
 
         
@@ -304,6 +392,7 @@ class AdjacencyMatrix(object):
         
 
 
+<<<<<<< HEAD
     def __get_node_index(self, node):
         return self.nodes.index(node);
         pass
@@ -324,6 +413,8 @@ class AdjacencyMatrix(object):
         return None
 
         
+=======
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
 
 
 
@@ -343,7 +434,11 @@ class ObjectOriented(object):
         if (node in self.nodes):
             return False;
 
+<<<<<<< HEAD
         else:
+=======
+        elif (node not in self.nodes):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
         	(self.nodes).append(node)
         	return True
            
@@ -354,7 +449,11 @@ class ObjectOriented(object):
             
             return False
 
+<<<<<<< HEAD
         else:
+=======
+        elif (edge not in self.edges):
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
             (self.edges).append(edge)
             return True
             
@@ -365,7 +464,11 @@ class ObjectOriented(object):
 
         if node not in self.nodes:           
             return False;
+<<<<<<< HEAD
         else:
+=======
+        elif node in self.nodes:
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
             
             (self.nodes).remove(node)
             
@@ -381,7 +484,11 @@ class ObjectOriented(object):
     def remove_edge(self, edge):
          if edge not in self.edges:
          	return False
+<<<<<<< HEAD
          else:
+=======
+         elif edge in self.edges:
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
          	(self.edges).remove(edge)
          	return True
          	
@@ -407,6 +514,7 @@ class ObjectOriented(object):
 
 
 
+<<<<<<< HEAD
     def distance(self,source, destination):
         for i in self.edges:
             if i.source == source and i.destination == destination:
@@ -419,3 +527,5 @@ class ObjectOriented(object):
 
     def get_graph(self):
         return self.nodes
+=======
+>>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
