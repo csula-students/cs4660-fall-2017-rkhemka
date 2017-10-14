@@ -33,5 +33,3 @@ class SimpleFile(object):
         line = self.numbers[line_number]
         s1= sum(line)
         return s1
-
-
