@@ -3,7 +3,7 @@ utils package is for some quick utility methods
 
 such as parsing
 """
-
+from graph import graph as g
 class Tile(object):
     """Node represents basic unit of graph"""
     def __init__(self, x, y, symbol):
@@ -91,10 +91,10 @@ def parse_grid_file(graph, file_path):
                  y +=1
                  continue
             else:
-                z=graph.Node(Tile(y,x,data[i][j]+data[i][j+1]))
+                z=g.Node(Tile(y,x,data[i][j]+data[i][j+1]))
 
-                a = graph.node(Tile(y,x,data[i][j]+data[i][j+1]))
-                g.add_node(z)
+                a = g.Node(Tile(y,x,data[i][j]+data[i][j+1]))
+                graph.add_node(z)
                 y +=1
                 j +=2
         y =0

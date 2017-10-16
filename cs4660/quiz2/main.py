@@ -9,7 +9,8 @@ TODO: implement Dijkstra utilizing the path with highest effect number
 
 import json
 import codecs
-
+from queue import *
+#from Queue import PriorityQueue
 # http lib import for Python 2 and 3: alternative 4
 try:
     from urllib.request import urlopen, Request
@@ -71,180 +72,131 @@ def readFile():
 
 
 
-if __name__ == "__main__":
-
-    # Your code starts here
-    empty_room = get_state('7f3dc077574c013d98b2de8f735058b4')
-    #print(empty_room)
-    print(transition_state(empty_room['id'], empty_room['neighbors'][0]['id']))
-    css={}
-    test =[]
 
 
-    #Finding shortest path  usinf BFS And storing it into list
 
-    initial_node ='7f3dc077574c013d98b2de8f735058b4'
-    destn_node = 'f1f131f647621a4be7c71292e79613f9'
-    room = transition_state(empty_room['id'], empty_room['neighbors'][0]['id'])
-    print(333333333333333333)
-    css[0] = readFile
-    print(css.keys())
-    visited =[]
-    visited.append(initial_node)
-    addVertex=[]
-    addVertex.append(initial_node)
 
+
+
+
+def BFS(start, end):
+    """
+    Breadth First Search
+    uses graph to do search from the initial_node to dest_node
+    returns a list of actions going from the initial node to dest_node
+    """
+ 
+#   print(32222222222222222222323332)
+#   print(destn_node)
     
-    
+
+#   print("asasas")
+#   print(visited)
+#   addVertex.append(get_state(initial_node))
+
     # Creating Dictonary of Distances and starPredeccsor 
     starPredeccsor={}
-    distance = {}
-    # Calculating distance and predecossr of initial Node
-    distance[initial_node] =0
-    starPredeccsor[initial_node] = None
+    distanceFrom = {} 
+    #Calculating distance and predecossr of initial Node
+    #distanceFrom[initial_node] =0
+    #starPredeccsor[initial_node['id']] = None
+
     v={}
+#   startExploringNodes=[]
+#   startExploringNodes.append(get_state(start))
+#   print(startExploringNodes)
+#   a23 = get_state(initial_node)
 
-    name    = "a" 
+    initial_node = get_state(start)
+    dest_node = get_state(end)
 
-    x = {}
 
-    
-    while (len(visited)>0):
-        currentVertex = visited.pop(0)
-        
-        for nbr in get_state(currentVertex):
+
+
+#   rer=get_state(initial_node)
+#   print(rer["neighbors"])
+#   print(rer["location"]["name"])
+#   print(rer)
+#   print(get_state(initial_node))
+
+
+    addVertex=[initial_node] 
+
+ 
+    visited = [initial_node['id']] 
+
+
+    while len(addVertex)>0:
+        currentVertex = addVertex.pop(0)
+        for nbr in currentVertex['neighbors']:
+            toNode = get_state(nbr['id'])
+            distanceTo = transition_state(currentVertex['id'], toNode['id'])
             
-            if nbr not in addVertex:
-                
-                visited.append(nbr)
-                print(232323)
-                v=(transition_state(currentVertex,nbr))
+            if toNode['id'] == dest_node['id']:
+                print("Inside IF")
+                visited.append(toNode['id'])
+                starPredeccsor[toNode['id']] = currentVertex['id']
+                distanceFrom[toNode['id']] = distanceTo
+                direction = []
+                while dest_node['id'] in starPredeccsor:
+                    direction.append(distanceFrom[dest_node['id']])
+                    dest_node['id'] = starPredeccsor[dest_node['id']]
 
-#                print(v.get('id'))
-#                name= v.get('id')
-                key = v.get('id')
+                hp = 0
+                for p in direction:
+                    
+                    prev_node = get_state(initial_node['id'])
+                    next_id = p['id']
+                    hp = hp + p['event']['effect']
 
-                if len(key)==0:
-                    d=0
-                else:
-                    d=len(key)
-                
-                distance[nbr] = distance[currentVertex]+ d
-                starPredeccsor[nbr]= currentVertex
-                addVertex.append(nbr)
-                
-        if destn_node in addVertex:
-            #print("I breaked")
-            break
-    list =[]
-
-    while starPredeccsor[destn_node] is not None:
-        list = [graph.get_edge(starPredeccsor[destn_node], destn_node)] + list
-   #     print (list)
-        destn_node= starPredeccsor[destn_node]
-    #print(list)
+                    print ("%s(%s):%s(%s): %i" % (prev_node['location']['name'], initial_node['id'], p['action'], p['id'], p['event']['effect']))
+                    initial_node['id'] = next_id
+                print("   ")
+                print("\nTotal HP Resulted For BFS As : %i" % hp)
+                print("   ")
+            
+                return
 
 
 
-
-
-# Dijkstra Algorithm
-
-    
-
-
-
-    exploredNodes =[]
-    startExploringNodes ={}
-    
-
-    # copyOfExploredNodes will check if the node was initilly considered for dijkstra or not
-    copyOfExploredNodes=[]
-   
-
-    # Creating Dictonary of Distances and starPredeccsor 
-    starPredeccsor={}
-    distance = {}
-
-
-
-    startExploringNodes[initial_node] = 0
-    # Calculating distance and predecossr of initial Node
-    distance[initial_node] =0
-    starPredeccsor[initial_node] = None
-    #path[initial_node]=-1
-    exploredNodes.append(initial_node)
-
-    x1=destn_node
-    d1 =-1
-
-
-    #a=graph.distance(initial_node,dest_node)
-    #a =(graph.size())
-  
-
-    while len(exploredNodes)>0:
-        currentVertex = max(startExploringNodes, key=startExploringNodes.get)#_edge)
-        #visited.pop(currentVertex)
-        
-
-        
-
-        startExploringNodes.pop(currentVertex)
-        exploredNodes.append(currentVertex)
-        copyOfExploredNodes.append(currentVertex)
-
-
-
-
-        for nbr in get_state(currentVertex):
-            #print("Inside For")
-            if nbr in copyOfExploredNodes:
-                #print("Inside If")
-                break
+            elif toNode['id'] not in visited:
+             #   print("Inside Elfse If")
+                visited.append(toNode['id'])
+                starPredeccsor[toNode['id']] = currentVertex['id']
+                distanceFrom[toNode['id']] = distanceTo
+                addVertex.append(toNode)
             else:
-
-                #print(distance[nbr])
-
-                if( (nbr not in startExploringNodes and nbr not in exploredNodes) or (distance[nbr]>distance[currentVertex]+transition_state(currentVertex,nbr))):
-                    copyOfExploredNodes.append(nbr)
-
-                    print(232323)
-                    v=(transition_state(currentVertex,nbr))
-                    key = v.get('id')
-                    if len(key)==0:
-                        d1=0
-                    else:
-                        d1=len(key)
-
-
-
-                    startExploringNodes[nbr] =distance[currentVertex]+ d1
-                    distance[nbr] = distance[currentVertex]+ d1
-                    starPredeccsor[nbr] = currentVertex
-                    exploredNodes.append(nbr)
-                    #print("ex")
-
-        if destn_node in exploredNodes:
-            break
+                continue
 
 
 
 
-    list1 =[]
-
-    while starPredeccsor[x1] is not None:
-
-        list1 = [graph.get_edge(starPredeccsor[x1], x1)] + list1
-        x= starPredeccsor[x1]
 
 
+    
+def finder(node_id, starPredeccsor, distanceFrom,start):
+    direction = []
+    while node_id in starPredeccsor:
+        direction.append(distanceFrom[node_id])
+        node_id = starPredeccsor[node_id]
+    #
+
+    prev_id = start
+    hp1 = 0
+    for i in direction:
+        prev_node = get_state(prev_id)
+        next_id = i['id']
+        hp1 = hp1+ i['event']['effect']
+        print ("%s(%s):%s(%s): %i" % (prev_node['location']['name'], prev_id, i['action'], i['id'], i['event']['effect']))
+        prev_id = next_id
+    print("\nTotal HP Resulted For Dijsktra Search As:  %i" % hp1)
+
+	
 
 
-  #  return list
 
 
-                
+     
 
        
 
@@ -252,3 +204,108 @@ if __name__ == "__main__":
 
 
 
+def Dijkstra_Search(initial_node,dest_node):
+   
+
+
+#   print(32222222222222222222323332)
+#   print(destn_node)
+
+    # Creating Dictonary of Distances and starPredeccsor 
+    starPredeccsor={}
+    distance = {} 
+
+
+    # list to store the list of nodes visited
+    visited= []
+
+    addVertex = PriorityQueue()
+
+    addVertex.put((0, initial_node))
+
+    distance[initial_node] =0
+    distanceFrom = {}
+    
+    #visited = []
+
+
+    
+    exploredNodes = []
+   # distance[initial_node] = 0
+   # starPredeccsor[initial_node] = None
+    starPredeccsor2 ={}
+    exploredNodes.append((0,initial_node))
+
+    while not addVertex.empty():
+
+        toNode =get_state(addVertex.get()[1])
+
+        #print(45555555555454)
+        #print(toNode)
+
+
+        visited.append(toNode['id'])
+        #(555)
+        for nbr in toNode['neighbors']:
+        #	print(nbr)
+            start21 = transition_state(toNode['id'], nbr['id'])
+            # print(inside For)
+            x = distance[toNode['id']] + int(start21['event']['effect'])
+
+            if ((nbr['id'] not in visited) and ((nbr['id'] not in distance) or (x > distance[nbr['id']]))):
+                # print(Inside If)
+                addVertex.put((-x, nbr['id']))
+                distance[nbr['id']] = x
+                #print(2222222)
+                starPredeccsor[nbr['id']] = toNode['id']
+                distanceFrom[nbr['id']] = start21
+                #print(distanceFrom)
+
+    finder(dest_node, starPredeccsor, distanceFrom, initial_node)    
+
+
+ 
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+
+    # Your code starts here
+    empty_room = get_state('7f3dc077574c013d98b2de8f735058b4')
+    #print(empty_room)
+    #print(transition_state(empty_room['id'], empty_room['neighbors'][0]['id']))
+    css={}
+    test =[]
+
+
+    #Finding shortest path  usinf BFS And storing it into list
+
+    initial_node =('7f3dc077574c013d98b2de8f735058b4')
+    destn_node = ('f1f131f647621a4be7c71292e79613f9')
+    room = transition_state(empty_room['id'], empty_room['neighbors'][0]['id'])
+    #print(333333333333333333)
+    css[0] = readFile
+
+    empty_room = get_state('7f3dc077574c013d98b2de8f735058b4')
+
+    dest_room = get_state('f1f131f647621a4be7c71292e79613f9')
+
+    print("\n BFS Path")
+    BFS(initial_node,destn_node)
+
+    print("\n Dijsktra path")
+
+    Dijkstra_Search(initial_node,destn_node)
