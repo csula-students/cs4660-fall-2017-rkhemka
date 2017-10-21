@@ -41,9 +41,9 @@ def construct_graph_from_file(graph, file_path):
     2. for each following line (from second line to last line), add them as edge to graph
     3. return the graph
     """
-    print(222)
-    print(file_path)
-    f = open("http://192.241.218.106:9000/secret", encoding='utf-8')
+#    print(222)
+ #   print(file_path)
+    f = open(file_path, encoding='utf-8')
     line = f.readline()
     for i in range(int(line)):
         graph.add_node(Node(i))
@@ -54,6 +54,7 @@ def construct_graph_from_file(graph, file_path):
             values = line.split(':')
             edge = Edge( Node( int( values[0] ) ), Node( int( values[1] ) ), int( values[2] ) )
             graph.add_edge(edge)
+    f.close()
     return graph
 
 
@@ -178,8 +179,10 @@ class AdjacencyList(object):
     def distance(self,source, destination):
         return (self.adjacency_list[source][destination])
 
+
     def get_edge(self,source,destination):
         return Edge(source,destination,self.adjacency_list[source][destination])
+
 
     def get_graph(self):
         return None
