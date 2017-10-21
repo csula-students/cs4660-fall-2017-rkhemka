@@ -31,9 +31,4 @@ class SimpleFile(object):
     def get_sum(self, line_number):
         line = self.numbers[line_number]
         s1= sum(line)
-<<<<<<< HEAD
         return s1
-
-=======
-        return s1
->>>>>>> 440f2780bb22ac635173ad60658d5ce982ce2193
